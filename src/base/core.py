@@ -4,13 +4,15 @@ import json
 import csv
 from datetime import datetime, timedelta
 
-def buildMacroToCSV(data, name="output", inGCal = True):
+def buildMacroToCSV(data, name="output", inGCal = True, fmTracking = False):
 
     # Parse the start date
     start_date = datetime.strptime(data["startDate"], "%m/%d/%y")
 
     # Initialize variables
     current_weight = data["startingWeight"]
+    current_ffm = 0
+    current_fm = 0
     current_date = start_date
 
     # Parse cycle prefix numbering scheme
@@ -42,7 +44,12 @@ def buildMacroToCSV(data, name="output", inGCal = True):
             manual_weight_entry = next((entry for entry in data["manualWeights"] if entry["week"] == macro_week), None)
             if manual_weight_entry:
                 current_weight = manual_weight_entry["weight"]
-            
+                
+                # Adds ffm/fm to the current week if greater than 0
+                if fmTracking == True and manual_weight_entry['ffm'] >0:
+                    current_ffm = manual_weight_entry["ffm"]
+                    current_fm = manual_weight_entry["fm"]
+
             # Check if cycle week needs it's name printed in notes
             if week != 1:
                 cycle_name = ""
