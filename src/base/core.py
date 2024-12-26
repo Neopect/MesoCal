@@ -49,7 +49,7 @@ def buildMacroToCSV(data, name="output", inGCal = True):
 
 
             # Creates microcycle row
-            microcycle_row = [cycle_number_prefix+str(cycle_number),week_number, rate, round(current_weight, 2), cycle_name, macro_week]
+            microcycle_row = [cycle_number_prefix+str(cycle_number),week_number, str(rate)+'%', round(current_weight, 2), cycle_name, macro_week]
 
             # Creates the weekly calendar for the said week based on timedelta
             if inGCal == True:
