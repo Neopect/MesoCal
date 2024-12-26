@@ -4,7 +4,7 @@ import json
 import csv
 from datetime import datetime, timedelta
 
-def buildMacroToCSV(data, inGCal = True):
+def buildMacroToCSV(data, name="output", inGCal = True):
 
     # Parse the start date
     start_date = datetime.strptime(data["startDate"], "%m/%d/%y")
@@ -81,13 +81,13 @@ def buildMacroToCSV(data, inGCal = True):
 
 
     # Write the CSV rows to a file
-    with open("output.csv", mode="w", newline="") as file:
+    with open(name+".csv", mode="w", newline="") as file:
         writer = csv.writer(file)
         writer.writerow(macrocycle_headerrow)
         writer.writerows(csv_rows)
 
     
-    print("CSV file 'output.csv' has been created successfully.")
+    print(f"CSV file '{name}.csv' has been created successfully.")
 
 def main():#
     print("Test complete")
@@ -138,7 +138,10 @@ def buildMacro():
             file = open(macroSample)
             jsonData = json.load(file)
             file.close()
-            buildMacroToCSV(jsonData)
+            json_name = macroSample.split('/')[-1].replace('.mesocal.json', '')
+            file_name = input(f'Enter file name [default: {json_name}]: ') or json_name
+
+            buildMacroToCSV(jsonData, file_name)
     except:
         raise Exception("Error has occured")
 
