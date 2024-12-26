@@ -1,0 +1,22 @@
+[project]
+name = "neopect.MesoCal"
+version = "0.1.0"
+authors = [
+  { name="Neopect", email="author@example.com" },
+]
+description = "A basic Macrocycle calender"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GPLv3",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+Homepage = "https://github.com/Neopect/MesoCal"
+Issues = "https://github.com/Neopect/MesoCal/issues"
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"

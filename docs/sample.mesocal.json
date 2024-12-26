@@ -1,0 +1,13 @@
+{
+    "name":"",
+    "startDate":"1/1/25",
+    "startingWeight":200,
+    "cycleNumberPrefix":"",
+    "mesocycles": [
+        {"name": "", "weeks": 4, "deload": [4], "glmrStat": "", "rate":0.25},
+        {"name": "", "weeks": 2, "deload": [], "glmrStat": "", "rate":0}
+    ],
+    "manualWeights": [
+        {"week":2,"weight":205}
+    ]
+}
