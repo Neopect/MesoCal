@@ -11,8 +11,7 @@ def buildMacroToCSV(data, name="output", inGCal = True, fmTracking = False):
 
     # Initialize variables
     current_weight = data["startingWeight"]
-    current_ffm = 0
-    current_fm = 0
+    current_bf = data['startingBF']
     current_date = start_date
 
     # Parse cycle prefix numbering scheme
@@ -45,10 +44,9 @@ def buildMacroToCSV(data, name="output", inGCal = True, fmTracking = False):
             if manual_weight_entry:
                 current_weight = manual_weight_entry["weight"]
                 
-                # Adds ffm/fm to the current week if greater than 0
-                if fmTracking == True and manual_weight_entry['ffm'] >0:
-                    current_ffm = manual_weight_entry["ffm"]
-                    current_fm = manual_weight_entry["fm"]
+                # Adds bf to the current week if greater than 0
+                if fmTracking == True and manual_weight_entry['bf'] >0:
+                    current_bf = manual_weight_entry["bf"]
 
             # Check if cycle week needs it's name printed in notes
             if week != 1:
