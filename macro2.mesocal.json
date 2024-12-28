@@ -2,21 +2,21 @@
     "name":"Macro2",
     "startDate":"9/30/24",
     "startingWeight":180,
-    "startingBF":22,
+    "startingBF":0.22,
     "cycleNumberPrefix":"2.",
     "mesocycles": [
-        {"name": "Fall G1", "weeks": 6, "deload": [6], "glmrStat": "g", "rate":0.375},
-        {"name": "Winter G2", "weeks": 3, "deload": [3], "glmrStat": "g", "rate":0.375},
-        {"name": "PB-1 G3", "weeks": 11, "deload": [6,11], "glmrStat": "g", "rate":0.33},
-        {"name": "Active Rest - Winter", "weeks": 1, "deload": [], "glmrStat": "r", "rate":0},
-        {"name": "Spring C4", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375},
-        {"name": "Spring C5", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375},
-        {"name": "PB-2 G6", "weeks": 11, "deload": [6,11], "glmrStat": "g", "rate":0.33},
-        {"name": "Active Rest - Spring", "weeks": 1, "deload": [], "glmrStat": "r", "rate":0},
-        {"name": "Spring C7", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375},
-        {"name": "Spring C8", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375}
+        {"name": "Fall G1", "weeks": 6, "deload": [6], "glmrStat": "g", "rate":0.375, "fmratio":0.25},
+        {"name": "Winter G2", "weeks": 3, "deload": [3], "glmrStat": "g", "rate":0.375, "fmratio":0.25},
+        {"name": "PB-1 G3", "weeks": 11, "deload": [6,11], "glmrStat": "g", "rate":0.33, "fmratio":0.25},
+        {"name": "Active Rest - Winter", "weeks": 1, "deload": [], "glmrStat": "r", "rate":0, "fmratio":0.25},
+        {"name": "Spring C4", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375, "fmratio":0.8},
+        {"name": "Spring C5", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375, "fmratio":0.8},
+        {"name": "PB-2 G6", "weeks": 11, "deload": [6,11], "glmrStat": "g", "rate":0.33, "fmratio":0.25},
+        {"name": "Active Rest - Spring", "weeks": 1, "deload": [], "glmrStat": "r", "rate":0, "fmratio":0.25},
+        {"name": "Spring C7", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375, "fmratio":0.8},
+        {"name": "Spring C8", "weeks": 6, "deload": [6], "glmrStat": "l", "rate":-0.375, "fmratio":0.8}
     ],
     "manualWeights": [
-        {"week":14,"weight":186, "bf":25}
+        {"week":14,"weight":186, "bf":0.25}
     ]
 }

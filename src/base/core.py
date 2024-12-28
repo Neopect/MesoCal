@@ -4,7 +4,7 @@ import json
 import csv
 from datetime import datetime, timedelta
 
-def buildMacroToCSV(data, name="output", inGCal = True, fmTracking = False):
+def buildMacroToCSV(data, name="output", inGCal = True, bfTracking = False):
 
     # Parse the start date
     start_date = datetime.strptime(data["startDate"], "%m/%d/%y")
@@ -45,7 +45,7 @@ def buildMacroToCSV(data, name="output", inGCal = True, fmTracking = False):
                 current_weight = manual_weight_entry["weight"]
                 
                 # Adds bf to the current week if greater than 0
-                if fmTracking == True and manual_weight_entry['bf'] >0:
+                if fmTracking == True and manual_weight_entry['bf'] <0:
                     current_bf = manual_weight_entry["bf"]
 
             # Check if cycle week needs it's name printed in notes
@@ -69,7 +69,12 @@ def buildMacroToCSV(data, name="output", inGCal = True, fmTracking = False):
             
             # Update the weight for the next week if it's not a deload week
             if week not in deload_weeks:
+                
                 current_weight += current_weight * (rate/100)
+
+                if bfTracking == True:
+                    # Equation to calc new BF: BF_new=(WG*GR+BW_prev*BF_prev)/BW_prev+WG
+                    current_bf = None
             
             # Update the date for the next week
             current_date += timedelta(weeks=1)
@@ -190,3 +195,4 @@ def menu():
 
 
 menu()
+
