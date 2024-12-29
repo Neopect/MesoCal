@@ -4,7 +4,7 @@ import json
 import csv
 from datetime import datetime, timedelta
 
-def buildMacroToCSV(data, name="output", inGCal = True, bfTracking = False):
+def buildMacroToCSV(data, name="output", inGCal = False, bfTracking = False):
 
     # Parse the start date
     start_date = datetime.strptime(data["startDate"], "%m/%d/%y")
@@ -30,6 +30,7 @@ def buildMacroToCSV(data, name="output", inGCal = True, bfTracking = False):
         weeks = cycle["weeks"]
         deload_weeks = cycle["deload"]
         rate = cycle["rate"]
+        fmratio = cycle["fmratio"]
 
         # Iterate through each week in the mesocycle
         for week in range(1, weeks + 1):
@@ -44,8 +45,9 @@ def buildMacroToCSV(data, name="output", inGCal = True, bfTracking = False):
             if manual_weight_entry:
                 current_weight = manual_weight_entry["weight"]
                 
+                
                 # Adds bf to the current week if greater than 0
-                if fmTracking == True and manual_weight_entry['bf'] <0:
+                if bfTracking == True and manual_weight_entry['bf'] >0:
                     current_bf = manual_weight_entry["bf"]
 
             # Check if cycle week needs it's name printed in notes
@@ -56,11 +58,15 @@ def buildMacroToCSV(data, name="output", inGCal = True, bfTracking = False):
             # Creates microcycle row
             microcycle_row = [cycle_number_prefix+str(cycle_number),week_number, str(rate)+'%', round(current_weight, 2), cycle_name, macro_week]
 
+            if bfTracking == True:
+                microcycle_row.insert(-2, round(current_bf,4))
+
             # Creates the weekly calendar for the said week based on timedelta
             if inGCal == True:
                 microcycle_row.append(current_date.strftime("%b"))
                 for day in range(0,7):
                     microcycle_row.append((current_date + timedelta(days=day)).strftime("%-d"))
+
 
 
             # Append the row to the CSV rows list
@@ -70,11 +76,15 @@ def buildMacroToCSV(data, name="output", inGCal = True, bfTracking = False):
             # Update the weight for the next week if it's not a deload week
             if week not in deload_weeks:
                 
-                current_weight += current_weight * (rate/100)
-
+                weight_gain = current_weight * (rate/100)
+                
                 if bfTracking == True:
-                    # Equation to calc new BF: BF_new=(WG*GR+BW_prev*BF_prev)/BW_prev+WG
-                    current_bf = None
+                    # New Equation: FB_new = (BW_prev * (GR/100) * FMR + (BW_prev * BF)) / (BW_prev * (1 + (GR/100)))
+
+                    # Looks like equation works if I checked my math properly ¯\_(ツ)_/¯
+                    current_bf = (weight_gain * fmratio + (current_weight * current_bf)) / (current_weight + weight_gain)
+
+                current_weight += weight_gain
             
             # Update the date for the next week
             current_date += timedelta(weeks=1)
@@ -86,6 +96,8 @@ def buildMacroToCSV(data, name="output", inGCal = True, bfTracking = False):
         cycle_number +=1
 
     macrocycle_headerrow = ["Cycle", "Cycle Week", "Gain (%)", "Weight Predictions", "Notes", "Week"]
+    if bfTracking == True:
+        macrocycle_headerrow.insert(-2,'BF')
     if inGCal == True:
         macrocycle_headerrow.extend(['Month','Mon','Tues', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'])
 
@@ -151,7 +163,7 @@ def buildMacro():
             json_name = macroSample.split('/')[-1].replace('.mesocal.json', '')
             file_name = input(f'Enter file name [default: {json_name}]: ') or json_name
 
-            buildMacroToCSV(jsonData, file_name)
+            buildMacroToCSV(jsonData, file_name, False, True)
     except:
         raise Exception("Error has occured")
 
